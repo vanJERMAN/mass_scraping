@@ -7,7 +7,7 @@ Script will scrap Mass.si webpage and make new xlsx file depending on the curren
 # selenium module works headless, so it spares some CPU :D
 # vstavitev_slik.py and vstavitev_slik_HR.py will insert photos of articles to the first column
 # grafi.py and grafi_HR.py scripts will first create graphs and after that will insert them on their specific location in the .xlsx file. It will create pie graph for every number of a specific article + pie graph for all numbers of a specific article + bar graph for history of all numbers of specific article + pie graph of all articles and at the end will also create bar graph for history of all articles.
-# at the end posiljanje.py and posiljanje_HR.py will send mail, with included .xlsx file to the recepient or multiple recepients.
+# at the end posiljanje.py and posiljanje_HR.py will send mail, with included .xlsx file to the recepient or multiple recepients. In those two files change "HERE_ENTER_RECIPIENT_MAIL@GMAIL.COM" to... you guessed right! To the mail you want to send :D Also change at the bottom the api key... you have to enter your own api key in there.
 # in mass_scraping.py and mass_scraping_HR.py is also try/except for every part of this app, in case if there is an error, that it retries again and if it fails for the second time, it sends email to the recepient or multiple recepients with error message.
 
 
