@@ -8,7 +8,7 @@ import pathlib
 datum = date.today()
 path = pathlib.Path(__file__).parent.absolute()
 
-def posiljanje(recipient="RECIPIENT_MAIL@GMAIL.COM", subject=f"Mass HR dokumentacija {datum}", message="Sporočilo je bilo avtomatizirano s pomočjo Pythona.\nSestavil, uredil in poslal: Erik Jerman\n", file_path=f'{path}/csv_in_xlsx_datoteke_HR/{datum}.xlsx'):
+def posiljanje(recipient="HERE_ENTER_RECIPIENT_MAIL@GMAIL.COM", subject=f"Mass HR dokumentacija {datum}", message="Sporočilo je bilo avtomatizirano s pomočjo Pythona.\nSestavil, uredil in poslal: Erik Jerman\n", file_path=f'{path}/csv_in_xlsx_datoteke_HR/{datum}.xlsx'):
 	print(f"Sending {subject}")
 	to_emails = [
     ('vanjermancek@gmail.com'),
