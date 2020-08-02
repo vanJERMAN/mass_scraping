@@ -8,7 +8,7 @@ import pathlib
 datum = date.today()
 path = pathlib.Path(__file__).parent.absolute()
 
-def posiljanje(recipient="natasak@sanis.si", subject=f"Mass dokumentacija {datum}", message="Sporočilo je bilo avtomatizirano s pomočjo Pythona.\nSestavil, uredil in poslal: Erik Jerman\n", file_path=f'{path}/csv_in_xlsx_datoteke/{datum}.xlsx'):
+def posiljanje(recipient="recipient_mail@gmail.com", subject=f"Mass dokumentacija {datum}", message="Sporočilo je bilo avtomatizirano s pomočjo Pythona.\nSestavil, uredil in poslal: Erik Jerman\n", file_path=f'{path}/csv_in_xlsx_datoteke/{datum}.xlsx'):
 	print(f"Sending {subject}")
 	to_emails = [
     ('vanjermancek@gmail.com'),
@@ -37,7 +37,7 @@ def posiljanje(recipient="natasak@sanis.si", subject=f"Mass dokumentacija {datum
 	except FileNotFoundError:
 		print("Datoteka ne obstaja")
 
-	sg = SendGridAPIClient('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')
+	sg = SendGridAPIClient('ENTER_YOUR_API_KEY_HERE')
 	response = sg.send(message)
 	print(response.status_code, response.body, response.headers)
 
