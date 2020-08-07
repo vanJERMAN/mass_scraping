@@ -11,7 +11,7 @@ from posiljanje import posiljanje
 import pathlib
 
 path = pathlib.Path(__file__).parent.absolute()
-
+path_articles = []
 
 def izdelava_grafov():
 	vsi_artikli_na_zalogi = 0
@@ -28,6 +28,9 @@ def izdelava_grafov():
 	ws = wb.worksheets[0] 
 	sheet = wb.active
 	xlsx_path = f"{path}/csv_in_xlsx_datoteke/{datum}.xlsx"
+	for row in range(2, sheet.max_row+1):
+			path_article = ws[f"A{row}"].value
+			path_articles.append(path_article)
 
 	for row in range(1, sheet.max_row):
 		celoten_artikel_na_zalogi = 0
@@ -145,7 +148,7 @@ def izdelava_grafov():
 				plt.cla()
 
 	wb.save(filename = f"{path}/csv_in_xlsx_datoteke/{datum}.xlsx")
-
+	print(path_articles)
 
 
 
@@ -165,8 +168,9 @@ def izdelava_stolpcev():
 		datumi.append(str(erik[x])[:10])
 	# print(datumi)
 	for datum in datumi:
-		print(datum)
+		# print(datum)
 		try:
+			this_doc_paths = []
 			wb = openpyxl.load_workbook(filename = f"{path}/csv_in_xlsx_datoteke/{datum}.xlsx")
 			ws = wb.worksheets[0]
 			sheet = wb.active
@@ -178,17 +182,21 @@ def izdelava_stolpcev():
 			zaloga_vseh_izdelkov["vsi"].append(zgodovina_vseh_izdelkov)
 			for row in range(2, sheet.max_row+1):
 				path_article = ws[f"A{row}"].value
+				this_doc_paths.append(path_article)
 				values = ws[f"B{row}"].value
 				value = values.split(":")
 				na_zalogi_zgodovina = value[0]
 				zaloga_izdelkov[path_article].append(na_zalogi_zgodovina)
+			for p in path_articles:
+				if p not in this_doc_paths:
+					zaloga_izdelkov[p].append("0")
 		except (FileNotFoundError, AttributeError):
 			None
 
 
-	for row in range(2, sheet.max_row+1):
+	for row in range(2, sheet.max_row):
 		print(row)
-		print(sheet.max_row+1)
+		# print(sheet.max_row+1)
 		path_xlsx = f"{path}/csv_in_xlsx_datoteke/{datum}.xlsx"
 		inputWorkbook = xlrd.open_workbook(path_xlsx)
 		inputWorksheet = inputWorkbook.sheet_by_index(0)
@@ -203,11 +211,13 @@ def izdelava_stolpcev():
 		for x in range(1, 31):	
 			try:
 				dev_y.append(int(zaloga_izdelkov[path_article][-x]))
+				print(dev_y)
 			except (IndexError, ValueError):
 				None
 		for y in range(1, len(dev_y)+1):
 			ages_x.append(zaloga_izdelkov["datum"][-y][5:10])
-			print(zaloga_izdelkov["datum"][-y][5:10])
+			# print(zaloga_izdelkov["datum"][-y][5:10])
+			# print(zaloga_izdelkov)
 
 
 		plt.bar(ages_x[::-1], dev_y[::-1], color="#4567c7", label="Število artiklov")
@@ -222,7 +232,7 @@ def izdelava_stolpcev():
 		plt.xticks(rotation=90)
 		plt.tight_layout()
 		plt.savefig(f'{path}/slike/grafi/zgodovina.{url_index}.{datum}.png')
-		print(f'zgodovina.{url_index}.{datum}.png graf je shranjen!')
+		# print(f'zgodovina.{url_index}.{datum}.png graf je shranjen!')
 		plt.clf()
 		plt.cla()
 	plt.style.use("fivethirtyeight")
@@ -250,7 +260,7 @@ def izdelava_stolpcev():
 	plt.xticks(rotation=90)
 	plt.tight_layout()
 	plt.savefig(f'{path}/slike/grafi/zgodovina_prodaje_vseh_artiklov.{datum}.png')
-	print(f'zgodovina_prodaje_vseh_artiklov.{datum}.png graf je shranjen!')
+	# print(f'zgodovina_prodaje_vseh_artiklov.{datum}.png graf je shranjen!')
 	plt.clf()
 	plt.cla()
 	# for row in range(2, sheet.max_row+1):
@@ -367,7 +377,7 @@ def vstavitev_grafov():
 
 
 if __name__ == "__main__":
-	# izdelava_grafov()
-	# izdelava_stolpcev()
+	izdelava_grafov()
+	izdelava_stolpcev()
 	vstavitev_grafov()
 
