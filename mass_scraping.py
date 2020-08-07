@@ -180,7 +180,12 @@ def scraping():
 				posiljanje("vanjermancek@gmail.com", "There was an error while running vstavitev_grafov()", f"{error}", "no_attachment")
 				break
 		try:
+			os.remove(f"{path}/csv_in_xlsx_datoteke/mass_data.csv")
+			print("mass_data.csv Removed!")
 			posiljanje()
+			print("POSLALO! Čaki še 10 sekund")
+			sleep(10)
+			print("ekola konec!")
 			break
 		except:
 			try:
